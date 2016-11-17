@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+          <!-- Latest compiled and minified CSS -->
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+          <!-- Optional theme -->
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+          <!-- Latest compiled and minified JavaScript -->
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+    <body data-ng-app="test" data-ng-controller="CarMarketController">
+
+      <div class="col-md-3">
+      <form>
+        <div class="form-group">
+            <label for="searchCar">Search</label>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search" ng-model="filter.search"/>
+                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search"></span></span>
+            </div>
+            <div>
+                <label for="brandName">Select brand</label>
+                <select class="form-control" id="exampleSelect1" ng-model="filter.make">
+                    <option value="">Select</option>
+                    <option ng-repeat="brand in model.list.carData.name" ng-value="brand">{{brand}}</option>
+                </select>
+            </div>
+            <div>
+                <label for="modelName">Select model</label>
+                <select class="form-control" id="exampleSelect1" ng-disabled="!filter.make" ng-model="filter.model">
+                    <option value="">Select</option>
+                    <option ng-if="filter.make" ng-repeat="model in model.list.carData.models|filter:filter.make" ng-value="model.name">{{model.name}}</option>
+                </select>
+            </div>
+            </br>
+            <button class="btn btn-lg btn-primary" ng-click="showCart=!showCart" ng-disabled=""><span class="glyphicon glyphicon-shopping-cart"></span> Cart <span ng-if="store.itemsInCart" class="badge">{{store.itemsInCart}}</span></button>
+            <span><button class="btn btn-lg btn-success" ng-disabled="!store.itemsInCart" ng-click="">Complete</button></span>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-md-9">
+        <div ng-repeat="car in model.list.carData.models | filter: filter.make | filter:filter.model | filter:filter.search">
+          <div class="panel panel-default col-xs-12 col-sm-3">
+          <!-- Model panel -->
+          <div class="panel-heading">{{car.make}}
+            <span class="glyphicon pull-right glyphicon-star"
+                  ng-class="car.isSelected ? 'glyphicon-star':'glyphicon-star-empty'"
+                  ng-click="addCar(car.id)"></span>
+          </div>
+          <div class="panel-body">
+            <p>{{car.name}}</p>
+          </div>
+          </div>
+        </div>
+    </div>
+
+
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
+        <script src="./javascript/index.js"></script>
+
+    </body>
+</html>
