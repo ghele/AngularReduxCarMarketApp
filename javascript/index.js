@@ -1,14 +1,12 @@
 const store = Redux.createStore( ( state = {}, action ) => {
     switch( action.type ) {
         case 'RECEIVE_CARS':
-            // console.log('RECEIVE_CARS', Object.assign({}, state, action.carData));
-            // console.log('state', state);
             return Object.assign({}, state, action);
         case 'ADD_CAR':
-        var id = action.carId;
-            // console.log(Object.assign(state, state.carData.models[action.carId].isSelected = !state.carData.models[action.carId].isSelected));
-            // console.log(Object.assign({}, state, {state.carData.models[id].isSelected : !state.carData.models[id].isSelected)});
-console.log(state);
+            const isPicked = state.carData.models[action.carId].isSelected;
+            return Object.assign(state, isPicked = !isPicked);
+        case 'ADD_TO_CART':
+            return ;
         default:
             return state
     }
@@ -66,6 +64,8 @@ app.controller( 'CarMarketController', ( $scope, $timeout, calendar, store ) => 
     $scope.addCar = ( carId ) => {
       console.log(carId);
         store.dispatch( { type: 'ADD_CAR', carId } )
+        console.log("GET STATE", store.getState());
+
     }
 
     $scope.getCars();
